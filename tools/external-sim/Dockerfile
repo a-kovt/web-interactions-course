@@ -1,4 +1,4 @@
-FROM ghcr.io/astral-sh/uv:0.9.2-python3.14-bookworm-slim
+FROM ghcr.io/astral-sh/uv:0.13.1-python3.14-trixie-slim
 
 ENV UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \

@@ -1,6 +1,9 @@
 # /// script
 # requires-python = ">=3.14"
-# dependencies = ["websockets==15.0.1", "httpx==0.28.1"]
+# dependencies = [
+#     "websockets>=17.3",
+#     "httpx>=0.28.1",
+# ]
 # ///
 """Slow WebSocket client for D5.6: connects and never reads.
 

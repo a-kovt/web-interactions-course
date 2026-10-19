@@ -1,6 +1,8 @@
 # /// script
 # requires-python = ">=3.14"
-# dependencies = ["confluent-kafka>=2.16"]
+# dependencies = [
+#     "confluent-kafka>=2.16",
+# ]
 # ///
 """Send the lines of a JSONL file to a Kafka topic in file order.
 

@@ -37,7 +37,7 @@ x-after-broker: &after-broker
 
 services:
   postgres:
-    image: postgres:16.4
+    image: postgres:17.11
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: app
@@ -58,7 +58,7 @@ services:
       retries: 30
 
   migrate:
-    image: postgres:16.4
+    image: postgres:17.11
     command:
       - "sh"
       - "-c"
@@ -97,7 +97,7 @@ services:
       INSTANCE: app-canary
 
   nginx:
-    image: nginx:1.27.2
+    image: nginx:1.31.7
     command:
       - "sh"
       - "/etc/nginx/start.sh"
@@ -117,7 +117,7 @@ services:
     restart: unless-stopped
 
   broker:
-    image: apache/kafka:3.8.0
+    image: apache/kafka:4.3.1
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
@@ -140,7 +140,7 @@ services:
       retries: 40
     restart: unless-stopped
   broker-init:
-    image: apache/kafka:3.8.0
+    image: apache/kafka:4.3.1
     command:
       - "sh"
       - "/scripts/topics.sh"
@@ -154,7 +154,7 @@ services:
         condition: service_healthy
     restart: "no"
   kafka-ui:
-    image: kafbat/kafka-ui:v1.3.0
+    image: kafbat/kafka-ui:v1.5.0
     environment:
       KAFKA_CLUSTERS_0_NAME: web
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: broker:9092
@@ -249,11 +249,11 @@ services:
     restart: unless-stopped
 
   redis:
-    image: redis:7.4.1
+    image: redis:8.10.2
     ports:
       - "${REDIS_PORT:-6379}:6379"
   keycloak:
-    image: quay.io/keycloak/keycloak:26.0.6
+    image: quay.io/keycloak/keycloak:26.8.1
     command:
       - "start-dev"
       - "--import-realm"
@@ -268,7 +268,7 @@ services:
     ports:
       - "8180:8180"
   flags:
-    image: ghcr.io/open-feature/flagd:v0.15.7
+    image: ghcr.io/open-feature/flagd:v0.18.0
     command:
       - "start"
       - "--uri"
@@ -280,23 +280,21 @@ services:
     restart: unless-stopped
 
   otel-collector:
-    image: otel/opentelemetry-collector:0.114.0
+    image: otel/opentelemetry-collector:0.163.1
     volumes:
       - ./configs/otel/collector.yaml:/etc/otelcol/config.yaml:ro
   jaeger:
-    image: jaegertracing/all-in-one:1.63.0
-    environment:
-      COLLECTOR_OTLP_ENABLED: "true"
+    image: jaegertracing/jaeger:2.22.0
     ports:
       - "${JAEGER_PORT:-16686}:16686"
   prometheus:
-    image: prom/prometheus:v2.55.1
+    image: prom/prometheus:v3.15.0
     volumes:
       - ./configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
     ports:
       - "${PROMETHEUS_PORT:-9090}:9090"
   grafana:
-    image: grafana/grafana:11.3.1
+    image: grafana/grafana:13.2.4
     environment:
       GF_AUTH_ANONYMOUS_ENABLED: "true"
       GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer

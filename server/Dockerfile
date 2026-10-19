@@ -1,6 +1,6 @@
 # One image for app-a, app-b and the gateways (and your publisher and handler, when you write
 # them): the command in compose.yaml selects the process. Python 3.14, dependencies from uv.lock.
-FROM ghcr.io/astral-sh/uv:0.9.2-python3.14-bookworm-slim
+FROM ghcr.io/astral-sh/uv:0.13.1-python3.14-trixie-slim
 
 ENV UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \
